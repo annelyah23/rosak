@@ -1,5 +1,5 @@
 #wget https://github.com/${GitUser}/
-GitUser="NiLphreakzz"
+GitUser="annelyah23"
 #IZIN SCRIPT
 MYIP=$(curl -sS ipv4.icanhazip.com)
 echo -e "\e[32mloading...\e[0m"
@@ -57,7 +57,7 @@ rm -f /etc/systemd/system/cdn-dropbear.service
 cat > /etc/systemd/system/cdn-dropbear.service <<END
 [Unit]
 Description=Python WS-Dropbear
-Documentation=https://nilphreakz.me
+Documentation=https://rosak.me
 After=network.target nss-lookup.target
 
 [Service]
@@ -112,7 +112,7 @@ rm -f /etc/systemd/system/cdn-ovpn.service
 cat > /etc/systemd/system/cdn-ovpn.service <<END
 [Unit]
 Description=Python WS-Ovpn 
-Documentation=https://nilphreakz.me
+Documentation=https://rosak.me
 After=network.target nss-lookup.target
 
 [Service]

@@ -1,5 +1,5 @@
 #wget https://github.com/${GitUser}/
-GitUser="NiLphreakzz"
+GitUser="annelyah23"
 #Direct Proxy Squid For OpenVPN TCP
 RED='\e[1;31m'
 GREEN='\e[0;32m'
@@ -21,14 +21,14 @@ Port_OHP='8585';
 
 #Installing ohp Server
 cd 
-wget -O /usr/local/bin/ohpd "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/ohpd"
+wget -O /usr/local/bin/ohpd "https://raw.githubusercontent.com/${GitUser}/rosakk/main/ohpd"
 chmod +x /usr/local/bin/ohpd
 
 #Buat Service Untuk OHP Dropbear
 cat > /etc/systemd/system/ohpd.service <<END
 [Unit]
 Description=Direct Squid Proxy For ssh-dropbear
-Documentation=https://t.me/NiLphreakz
+Documentation=https://t.me/rosakk
 Wants=network.target
 After=network.target
 

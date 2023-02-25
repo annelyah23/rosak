@@ -1,5 +1,5 @@
 #wget https://github.com/${GitUser}/
-GitUser="NiLphreakzz"
+GitUser="annelyah23"
 if [ "${EUID}" -ne 0 ]; then
 		echo "You need to run this script as root"
 		exit 1
@@ -84,7 +84,7 @@ sleep 1
 echo ""
 # UPDATE RUN-UPDATE
 cd /usr/bin
-wget -O run-update "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/update/run-update.sh"
+wget -O run-update "https://raw.githubusercontent.com/${GitUser}/rosak/main/update/run-update.sh"
 chmod +x run-update
 # RUN UPDATE
 echo ""
@@ -96,24 +96,24 @@ echo ""
 echo -e "\e[0;32mNew Version Downloading started!\e[0m"
 sleep 2
 cd /usr/bin
-wget -O update "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/update/update.sh"
-wget -O run-update "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/update/run-update.sh"
-wget -O message-ssh "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/update/message-ssh.sh"
-wget -O change-port "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/change.sh"
-wget -O system "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/menu/system.sh"
-wget -O menu "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/menu.sh"
-wget -O add-host "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/system/add-host.sh"
-wget -O check-sc "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/system/running.sh"
-wget -O cert "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/cert.sh"
-wget -O trojaan "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/menu/trojaan.sh"
-wget -O xraay "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/menu/xraay.sh"
-wget -O xp "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/xp.sh"
-wget -O port-xray "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/change-port/port-xray.sh"
-wget -O themes "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/menu/themes.sh"
-wget -O autobackup "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/system/autobackup.sh"
-wget -O backup "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/system/backup.sh"
-wget -O bckp "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/system/bckp.sh"
-wget -O restore "https://raw.githubusercontent.com/${GitUser}/nilphreakz/main/system/restore.sh"
+wget -O update "https://raw.githubusercontent.com/${GitUser}/rosak/main/update/update.sh"
+wget -O run-update "https://raw.githubusercontent.com/${GitUser}/rosak/main/update/run-update.sh"
+wget -O message-ssh "https://raw.githubusercontent.com/${GitUser}/rosak/main/update/message-ssh.sh"
+wget -O change-port "https://raw.githubusercontent.com/${GitUser}/rosak/main/change.sh"
+wget -O system "https://raw.githubusercontent.com/${GitUser}/rosak/main/menu/system.sh"
+wget -O menu "https://raw.githubusercontent.com/${GitUser}/rosak/main/menu.sh"
+wget -O add-host "https://raw.githubusercontent.com/${GitUser}/rosak/main/system/add-host.sh"
+wget -O check-sc "https://raw.githubusercontent.com/${GitUser}/rosak/main/system/running.sh"
+wget -O cert "https://raw.githubusercontent.com/${GitUser}/rosak/main/cert.sh"
+wget -O trojaan "https://raw.githubusercontent.com/${GitUser}/rosak/main/menu/trojaan.sh"
+wget -O xraay "https://raw.githubusercontent.com/${GitUser}/rosak/main/menu/xraay.sh"
+wget -O xp "https://raw.githubusercontent.com/${GitUser}/rosak/main/xp.sh"
+wget -O port-xray "https://raw.githubusercontent.com/${GitUser}/rosak/main/change-port/port-xray.sh"
+wget -O themes "https://raw.githubusercontent.com/${GitUser}/rosak/main/menu/themes.sh"
+wget -O autobackup "https://raw.githubusercontent.com/${GitUser}/rosak/main/system/autobackup.sh"
+wget -O backup "https://raw.githubusercontent.com/${GitUser}/rosak/main/system/backup.sh"
+wget -O bckp "https://raw.githubusercontent.com/${GitUser}/rosak/main/system/bckp.sh"
+wget -O restore "https://raw.githubusercontent.com/${GitUser}/rosak/main/system/restore.sh"
 chmod +x update
 chmod +x run-update
 chmod +x message-ssh
