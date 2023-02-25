@@ -43,7 +43,7 @@ dev tun
 proto tcp
 setenv CLIENT_CERT 0
 remote $domain 1194
-http-proxy xxxxxxxxx 8000
+http-proxy xxxxxxxxx 8080
 resolv-retry infinite
 route-method exe
 nobind
