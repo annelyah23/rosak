@@ -1,4 +1,4 @@
-# ==================================================
+#!/bin/bash
 #wget https://github.com/${GitUser}/
 GitUser="annelyah23"
 
