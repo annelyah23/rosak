@@ -1,6 +1,6 @@
 #!/bin/bash
+#Script Updater ByJsPhantom
 shell_version="3.0";
-UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36";
 
 Font_Black="\033[30m";
 Font_Red="\033[31m";
@@ -14,13 +14,9 @@ Font_Suffix="\033[0m";
 
 
 clear;
-echo -e "  \033[1;37m${Font_Purple}Media Stream Unlocker Test Mod By NiLphreakzz${Font_Suffix}\033[0m";
-echo -e "  \033[1;37mVersion : ${Font_SkyBlue}${shell_version}${Font_Suffix}\033[0m";
-echo -e "  \033[1;37mTime    : $(date)\033[0m"
-
-export LANG="en_US.UTF-8";
-export LANGUAGE="en_US.UTF-8";
-export LC_ALL="en_US.UTF-8";
+echo -e " \033[36mMedia Stream Unlocker Test Mod By ${NC}\033[33mJsPhantom\033[0m"
+echo -e " \033[1;37mVersion : ${NC}\033[33m${shell_version}${Font_Suffix}\033[0m"
+echo -e " \033[32mTime    : $(date)\033[0m"
 
 function InstallJQ() {
     if [ -e "/etc/redhat-release" ];then
@@ -73,46 +69,29 @@ function GameTest_Steam(){
 
 function MediaUnlockTest_Netflix() {
     echo -n -e " Netflix\t\t\t\t->\c";
-    local result=$(curl -${1} --user-agent "${UA_Browser}" -sSL "https://www.netflix.com/" 2>&1);
-    if [ "$result" == "Not Available" ];then
-        echo -n -e "\r Netflix\t\t\t\t: ${Font_Red}Unsupport${Font_Suffix}\n";
-        return;
+    local result1=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81403959" 2>&1)
+
+    if [[ "$result1" == "404" ]]; then
+        echo -n -e "\r Netflix\t\t\t\t: ${Font_Yellow}Originals Only${Font_Suffix}\n"
+        return
+    elif [[ "$result1" == "403" ]]; then
+        echo -n -e "\r Netflix\t\t\t\t: ${Font_Red}No${Font_Suffix}\n"
+        return
+    elif [[ "$result1" == "200" ]]; then
+        local region=$(curl $useNIC $xForward -${1} --user-agent "${UA_Browser}" -fs --max-time 10 --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/80018499" | cut -d '/' -f4 | cut -d '-' -f1 | tr [:lower:] [:upper:])
+        if [[ ! -n "$region" ]]; then
+            region="US"
+        fi
+        echo -n -e "\r Netflix\t\t\t\t: ${Font_Green}Yes(Region: ${region})${Font_Suffix}\n"
+        return
+    elif [[ "$result1" == "000" ]]; then
+        echo -n -e "\r Netflix\t\t\t\t: ${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
     fi
-    
-    if [[ "$result" == "curl"* ]];then
-        echo -n -e "\r Netflix\t\t\t\t: ${Font_Red}Failed (Network Connection)${Font_Suffix}\n";
-        return;
-    fi
-    
-    local result=$(curl -${1} --user-agent "${UA_Browser}" -sL "https://www.netflix.com/title/81403959" 2>&1);
-    if [[ "$result" == *"page-404"* ]] || [[ "$result" == *"NSEZ-403"* ]];then
-        echo -n -e "\r Netflix\t\t\t\t: ${Font_Red}No${Font_Suffix}\n";
-        return;
-    fi
-    
-    local result1=$(curl -${1} --user-agent "${UA_Browser}" -sL "https://www.netflix.com/title/70143836" 2>&1);
-    local result2=$(curl -${1} --user-agent "${UA_Browser}" -sL "https://www.netflix.com/title/80027042" 2>&1);
-    local result3=$(curl -${1} --user-agent "${UA_Browser}" -sL "https://www.netflix.com/title/70140425" 2>&1);
-    local result4=$(curl -${1} --user-agent "${UA_Browser}" -sL "https://www.netflix.com/title/70283261" 2>&1);
-    local result5=$(curl -${1} --user-agent "${UA_Browser}" -sL "https://www.netflix.com/title/70143860" 2>&1);
-    local result6=$(curl -${1} --user-agent "${UA_Browser}" -sL "https://www.netflix.com/title/70202589" 2>&1);
-    
-    if [[ "$result1" == *"page-404"* ]] && [[ "$result2" == *"page-404"* ]] && [[ "$result3" == *"page-404"* ]] && [[ "$result4" == *"page-404"* ]] && [[ "$result5" == *"page-404"* ]] && [[ "$result6" == *"page-404"* ]];then
-        echo -n -e "\r Netflix\t\t\t\t: ${Font_Yellow}Only Homemade${Font_Suffix}\n";
-        return;
-    fi
-    
-    local region=$(tr [:lower:] [:upper:] <<< $(curl -${1} --user-agent "${UA_Browser}" -fs --write-out %{redirect_url} --output /dev/null "https://www.netflix.com/title/81403959" | cut -d '/' -f4 | cut -d '-' -f1));
-    
-    if [[ ! -n "$region" ]];then
-        region="MY";
-    fi
-    echo -n -e "\r Netflix\t\t\t\t: ${Font_Green}Yes(Region: ${region})${Font_Suffix}\n";
-    return;
 }
 
 function MediaUnlockTest_HotStar() {
-    echo -n -e " HotStar\t\t\t\t->\c"
+    echo -n -e " HotStar\t\t\t\t->\c";
     local result=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} ${ssll} -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://api.hotstar.com/o/v1/page/1557?offset=0&size=20&tao=0&tas=20")
     if [ "$result" = "000" ]; then
         echo -n -e "\r HotStar\t\t\t\t: ${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
@@ -184,21 +163,81 @@ function MediaUnlockTest_Viu_com() {
 	fi
 }
 
-function MediaUnlockTest_TikTok(){
-    echo -n -e " Tiktok\t\t\t\t\t->\c";
-    local tmpresult=$(curl --user-agent "${UA_Browser}" -${1} -s --max-time 10 "https://www.tiktok.com/" 2>&1)
-	if [[ "${tmpresult}" == "curl"* ]];then
-        echo -n -e "\r Tiktok\t\t\t\t\t: ${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
-        return;
+function MediaUnlockTest_DisneyPlus() {
+    echo -n -e " Disney+\t\t\t\t->\c";
+    local PreAssertion=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://global.edge.bamgrid.com/devices" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -H "content-type: application/json; charset=UTF-8" -d '{"deviceFamily":"browser","applicationRuntime":"chrome","deviceProfile":"windows","attributes":{}}' 2>&1)
+    if [[ "$PreAssertion" == "curl"* ]] && [[ "$1" == "6" ]]; then
+        echo -n -e "\r Disney+:\t\t\t\t${Font_Red}IPv6 Not Support${Font_Suffix}\n"
+        return
+    elif [[ "$PreAssertion" == "curl"* ]]; then
+        echo -n -e "\r Disney+\t\t\t\t: ${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
     fi
-    
-	local result=$(echo $tmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
-    if [ -n "$result" ];then
-        echo -n -e "\r Tiktok\t\t\t\t\t: ${Font_Green}Yes(Region: ${result})${Font_Suffix}\n"
-        return;
-	else
-		echo -n -e "\r Tiktok\t\t\t\t\t: ${Font_Red}Failed${Font_Suffix}\n"
-		return;
+    local assertion=$(echo $PreAssertion | python -m json.tool 2>/dev/null | grep assertion | cut -f4 -d'"')
+    local PreDisneyCookie=$(curl -s --max-time 10 "https://raw.githubusercontent.com/lmc999/RegionRestrictionCheck/main/cookies" | sed -n '1p')
+    local disneycookie=$(echo $PreDisneyCookie | sed "s/DISNEYASSERTION/${assertion}/g")
+    local TokenContent=$(curl $useNIC -${1} --user-agent "${UA_Browser}" -s --max-time 10 -X POST "https://global.edge.bamgrid.com/token" -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" -d "$disneycookie")
+    local isBanned=$(echo $TokenContent | python -m json.tool 2>/dev/null | grep 'forbidden-location')
+    local is403=$(echo $TokenContent | grep '403 ERROR')
+
+    if [ -n "$isBanned" ] || [ -n "$is403" ]; then
+        echo -n -e "\r Disney+\t\t\t\t: ${Font_Red}No${Font_Suffix}\n"
+        return
+    fi
+}    
+
+function MediaUnlockTest_iQYI_Region() {
+    echo -n -e " iQyi Oversea Region\t\t\t->\c";
+    curl $useNIC -${1} ${ssll} -s -I --max-time 10 "https://www.iq.com/" >~/iqiyi
+
+    if [ $? -eq 1 ]; then
+        echo -n -e "\r iQyi Oversea Region\t\t\t: ${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    result=$(cat ~/iqiyi | grep 'mod=' | awk '{print $2}' | cut -f2 -d'=' | cut -f1 -d';')
+    if [ -n "$result" ]; then
+        if [[ "$result" == "ntw" ]]; then
+            result=TW
+            echo -n -e "\r iQyi Oversea Region\t\t\t: ${Font_Green}${result}${Font_Suffix}\n"
+            rm ~/iqiyi >/dev/null 2>&1
+            return
+        else
+            result=$(echo $result | tr [:lower:] [:upper:])
+            echo -n -e "\r iQyi Oversea Region\t\t\t:${Font_Green}${result}${Font_Suffix}\n"
+            rm ~/iqiyi >/dev/null 2>&1
+            return
+        fi
+    else
+        echo -n -e "\r iQyi Oversea Region\t\t\t: ${Font_Red}Failed${Font_Suffix}\n"
+        rm ~/iqiyi >/dev/null 2>&1
+        return
+    fi
+} 
+
+function MediaUnlockTest_Tiktok_Region() {
+    echo -n -e " Tiktok Region\t\t\t\t->\c";
+    local Ftmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/")
+
+    if [ "$Ftmpresult" = "curl"* ]; then
+        echo -n -e "\r Tiktok Region\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
+
+    local FRegion=$(echo $Ftmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
+    if [ -n "$FRegion" ]; then
+        echo -n -e "\r Tiktok Region\t\t\t\t: ${Font_Green}${FRegion}${Font_Suffix}\n"
+        return
+    fi
+
+    local STmpresult=$(curl $useNIC -${1} ${ssll} --user-agent "${UA_Browser}" -s --max-time 10 "https://www.tiktok.com/" -b "s_v_web_id=verify_57c6380f8e4c609135d2afc9894e35ca; tt_csrf_token=73Z-2VskmVwMX0PyUtin6WWI; MONITOR_WEB_ID=verify_57c6380f8e4c609135d2afc9894e35ca")
+    local SRegion=$(echo $STmpresult | grep '"$region":"' | sed 's/.*"$region//' | cut -f3 -d'"')
+    if [ -n "$SRegion" ]; then
+        echo -n -e "\r Tiktok Region\t\t\t\t: ${Font_Yellow}${SRegion} (IDC IP Detected)${Font_Suffix}\n"
+        return
+    else
+        echo -n -e "\r Tiktok Region\t\t\t\t: ${Font_Red}Failed${Font_Suffix}\n"
+        return
     fi
 }
 
@@ -270,10 +309,12 @@ function global() {
 	MediaUnlockTest_Netflix ${1};
 	MediaUnlockTest_HotStar ${1};
 	MediaUnlockTest_YouTube ${1};
-	MediaUnlockTest_TikTok ${1};
 	MediaUnlockTest_iQiyi ${1};
 	MediaUnlockTest_Viu_com ${1};
 	GameTest_Steam ${1};
+	MediaUnlockTest_DisneyPlus ${1};
+	MediaUnlockTest_iQYI_Region ${1};
+	MediaUnlockTest_Tiktok_Region ${1};
 }
 
 function startcheck() {
@@ -293,12 +334,12 @@ function startcheck() {
     fi
 }
 
-# curl 包测试
+# install curl
 if ! curl -V > /dev/null 2>&1;then
     InstallCurl;
 fi
 
-# jq 包测试
+# install jq
 if ! jq -V > /dev/null 2>&1;then
     InstallJQ;
 fi
@@ -325,5 +366,4 @@ fi
 echo ""
 echo -e "${Font_Green}Finished Test${Font_Suffix}"
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
-menu
+read -n1 -r -p "Press any key to continue..."
